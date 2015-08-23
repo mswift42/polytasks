@@ -1,0 +1,10 @@
+node_modules
+dist
+bower_components
+.tmp
+app/images/
+app/robots.txt
+app/precache.json
+app/sw-import.js
+app/favicon.ico
+app/
