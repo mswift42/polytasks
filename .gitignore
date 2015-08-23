@@ -7,4 +7,11 @@ app/robots.txt
 app/precache.json
 app/sw-import.js
 app/favicon.ico
-app/
+/.editorconfig
+/.gitattributes
+/.jscsrc
+/.jshintrc
+/bower.json
+/gulpfile.js
+/package.json
+/wct.conf.json
