@@ -8,7 +8,7 @@
         display: block;
       }
     </style>
-    <paper-input label="Task Summary" on-change="saveTask" id="taskSummary"></paper-input>
+    <paper-input label="Task Summary" on-keyup="saveTask" id="taskSummary"></paper-input>
   </template>
   <script>
   (function() {
@@ -19,6 +19,7 @@
       saveTask: function(e) {
         if (e.which == 13) {
           this.fire('savedTask', {"summary" : this.$.taskSummary.value});
+          this.$.taskSummary.value = '';
         }
       },
       properties: {
