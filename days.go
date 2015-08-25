@@ -3,6 +3,7 @@ package days
 import (
 	"encoding/json"
 	"io"
+	"time"
 
 	"appengine"
 	"appengine/datastore"
@@ -17,11 +18,12 @@ type TaskCategory struct {
 }
 
 type Task struct {
-	ID       int64        `json:"id" datastore:"-"`
-	Summary  string       `json:"summary"`
-	Content  TaskNote     `json:"content"`
-	Done     bool         `json:"done"`
-	Category TaskCategory `json:"category"`
+	ID        int64        `json:"id" datastore:"-"`
+	Summary   string       `json:"summary"`
+	Content   TaskNote     `json:"content"`
+	Scheduled time.Time    `json:"scheduled"`
+	Done      bool         `json:"done"`
+	Category  TaskCategory `json:"category"`
 }
 
 func keyForID(c appengine.Context, id int64) *datastore.Key {
@@ -53,4 +55,10 @@ func decodeTask(r io.ReadCloser) (*Task, error) {
 	var task Task
 	err := json.NewDecoder(r).Decode(&task)
 	return &task, err
+}
+
+func listTasks(c appengine.Context) (*[]Task, error) {
+	tasks := []Task{}
+	keys, err := datastore.NewQuery("Task").Ancestor(tasklistkey(c)).Order("-Done").Order("Scheduled").GetAll(c, &tasks)
+
 }
