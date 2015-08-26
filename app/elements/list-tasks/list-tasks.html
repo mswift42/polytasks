@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../list-task/list-task.html">
 
 <dom-module id="list-tasks">
   <template>
@@ -17,7 +18,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <template is="dom-repeat" id="listtasks" tasks="tasks">
+      <div>
+        <list-task task="task"></list-task>
+      </div>
+    </template>
   </template>
   <script>
   (function() {
@@ -26,13 +31,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'list-tasks',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'list-tasks',
-          notify: true
-        }
-      }
     });
   })();
   </script>
