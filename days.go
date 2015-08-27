@@ -9,6 +9,10 @@ import (
 	"appengine/datastore"
 )
 
+// Task represents a single Task object, with an ID, a task summary
+// the task content, consisting of a slice of strings, a scheduled
+// date, the task status `done` (true or false) and a slice
+// of taskCategories.
 type Task struct {
 	ID        int64     `json:"id" datastore:"-"`
 	Summary   string    `json:"summary"`
