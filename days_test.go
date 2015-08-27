@@ -35,6 +35,18 @@ func TestKeyForID(t *testing.T) {
 		t.Error("expected <0>, got: ", key.IntID())
 	}
 }
+func TestTaskListKey(t *testing.T) {
+	assert := assert.New(t)
+	c, err := aetest.NewContext(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer c.Close()
+	key := tasklistkey(c)
+	assert.Equal(key.StringID(), "default_tasklist")
+	assert.Equal(key.Kind(), "Task")
+	assert.Equal(key.IntID(), 0)
+}
 
 func TestDecodeTask(t *testing.T) {
 	assert := assert.New(t)
