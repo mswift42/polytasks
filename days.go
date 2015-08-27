@@ -18,12 +18,12 @@ type TaskCategory struct {
 }
 
 type Task struct {
-	ID        int64        `json:"id" datastore:"-"`
-	Summary   string       `json:"summary"`
-	Content   TaskNote     `json:"content"`
-	Scheduled time.Time    `json:"scheduled"`
-	Done      bool         `json:"done"`
-	Category  TaskCategory `json:"category"`
+	ID        int64          `json:"id" datastore:"-"`
+	Summary   string         `json:"summary"`
+	Content   TaskNote       `json:"content"`
+	Scheduled time.Time      `json:"scheduled"`
+	Done      bool           `json:"done"`
+	Category  []TaskCategory `json:"category"`
 }
 
 func keyForID(c appengine.Context, id int64) *datastore.Key {
@@ -63,7 +63,7 @@ func listTasks(c appengine.Context) (*[]Task, error) {
 	if err != nil {
 		return nil, err
 	}
-	for i := 0; i < len(task); i++ {
+	for i := 0; i < len(tasks); i++ {
 		tasks[i].ID = keys[i].IntID()
 	}
 	return &tasks, err
