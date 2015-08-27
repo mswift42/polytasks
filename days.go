@@ -9,21 +9,13 @@ import (
 	"appengine/datastore"
 )
 
-type TaskNote struct {
-	NoteContent string
-}
-
-type TaskCategory struct {
-	Category string
-}
-
 type Task struct {
-	ID        int64          `json:"id" datastore:"-"`
-	Summary   string         `json:"summary"`
-	Content   TaskNote       `json:"content"`
-	Scheduled time.Time      `json:"scheduled"`
-	Done      bool           `json:"done"`
-	Category  []TaskCategory `json:"category"`
+	ID        int64     `json:"id" datastore:"-"`
+	Summary   string    `json:"summary"`
+	Content   []string  `json:"content"`
+	Scheduled time.Time `json:"scheduled"`
+	Done      bool      `json:"done"`
+	Category  []string  `json:"category"`
 }
 
 func keyForID(c appengine.Context, id int64) *datastore.Key {
