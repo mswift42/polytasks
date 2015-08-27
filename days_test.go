@@ -59,3 +59,19 @@ func TestDecodeTask(t *testing.T) {
 	}
 	assert.Equal(t1.Summary, "task1")
 }
+
+func TestSave(t *testing.T) {
+	assert := assert.New(t)
+	t1 := Task{Summary: "task1",
+		Content: []string{"Some Content"}}
+	c, err := aetest.NewContext(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	tn, err := t1.save(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Equal(tn.Summary, "task1")
+
+}
