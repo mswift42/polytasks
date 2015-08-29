@@ -53,14 +53,32 @@ func decodeTask(r io.ReadCloser) (*Task, error) {
 	return &task, err
 }
 
-func listTasks(c appengine.Context) (*[]Task, error) {
+func listTasks(c appengine.Context) ([]Task, error) {
 	tasks := []Task{}
-	keys, err := datastore.NewQuery("Task").Ancestor(tasklistkey(c)).Order("-Done").Order("Scheduled").GetAll(c, &tasks)
+	keys, err := datastore.NewQuery("Task").Ancestor(tasklistkey(c)).Order("Done").Order("Scheduled").GetAll(c, &tasks)
 	if err != nil {
 		return nil, err
 	}
 	for i := 0; i < len(tasks); i++ {
 		tasks[i].ID = keys[i].IntID()
 	}
-	return &tasks, err
+	return tasks, err
+}
+
+func init() {
+	r := mux.NewRouter().PathPrefix("/api/").Subrouter()
+	r.HandleFunc("/tasks", getAllTasks).Methods("GET")
+
+	http.Handle("/api/", r)
+}
+
+func getAllTasks(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	tasks, err := listTasks(c)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+	if err := json.NewEncoder(w).Encode(tasks); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }
