@@ -75,3 +75,29 @@ func TestSave(t *testing.T) {
 	assert.Equal(tn.Summary, "task1")
 
 }
+
+func TestListTasks(t *testing.T) {
+	c, err := aetest.NewContext(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert := assert.New(t)
+	t1 := Task{Summary: "task1", Done: true}
+	t2 := Task{Summary: "task2", Done: false}
+	t1n, err := t1.save(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Equal(t1n.Done, true)
+	t2n, err := t2.save(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Equal(t2n.Done, false)
+	tasklist, err := listTasks(c)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assert.Equal(tasklist[0].Summary, "task2")
+	assert.Equal(tasklist[1].Done, true)
+}
