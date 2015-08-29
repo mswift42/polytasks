@@ -3,7 +3,10 @@ package days
 import (
 	"encoding/json"
 	"io"
+	"net/http"
 	"time"
+
+	"github.com/gorilla/mux"
 
 	"appengine"
 	"appengine/datastore"
@@ -68,7 +71,7 @@ func listTasks(c appengine.Context) ([]Task, error) {
 func init() {
 	r := mux.NewRouter().PathPrefix("/api/").Subrouter()
 	r.HandleFunc("/tasks", getAllTasks).Methods("GET")
-
+	r.HandleFunc("/tasks", postTask).Methods("POST")
 	http.Handle("/api/", r)
 }
 
@@ -81,4 +84,20 @@ func getAllTasks(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(tasks); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
+}
+
+func postTask(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	task := Task{}
+	if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	ntask, err := task.save(c)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+	}
+	if err := json.NewEncoder(w).Encode(ntask); err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+
 }
