@@ -132,4 +132,22 @@ func TestHandlers(t *testing.T) {
 		}
 	}
 
+	getreq, err := instance.NewRequest("GET", uri, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	http.DefaultServeMux.ServeHTTP(resp, getreq)
+	if p, err := ioutil.ReadAll(resp.Body); err != nil {
+		t.Fail()
+	} else {
+		if strings.Contains(string(p), "Error") {
+			t.Errorf("header response shouldn't return erros: %s: ", p)
+		}
+		if !strings.Contains(string(p), "task1") {
+			t.Errorf("header response doesn't match: \n%s", p)
+		}
+		if !strings.Contains(string(p), "taskcontent1") {
+			t.Errorf("header reponse doesn't match: \n%s", p)
+		}
+	}
 }
