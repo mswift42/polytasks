@@ -2,6 +2,8 @@ package days
 
 import (
 	"io/ioutil"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 
@@ -100,4 +102,34 @@ func TestListTasks(t *testing.T) {
 	}
 	assert.Equal(tasklist[0].Summary, "task2")
 	assert.Equal(tasklist[1].Done, true)
+}
+
+func TestHandlers(t *testing.T) {
+	_, err := aetest.NewContext(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	resp := httptest.NewRecorder()
+	uri := "/api/tasks"
+	var testjson1 = `{"summary" : "task1",
+                "content" : ["taskcontent1"],
+    "done": false}`
+	instance, err := aetest.NewInstance(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	req, err := instance.NewRequest("POST", uri, ioutil.NopCloser(strings.NewReader(testjson1)))
+	http.DefaultServeMux.ServeHTTP(resp, req)
+	if p, err := ioutil.ReadAll(resp.Body); err != nil {
+		t.Fail()
+
+	} else {
+		if strings.Contains(string(p), "Error") {
+			t.Errorf("header response shouldn't return error: %s: ", p)
+		}
+		if !strings.Contains(string(p), "task1") {
+			t.Errorf("header response doesn't match: \n%s", p)
+		}
+	}
+
 }
