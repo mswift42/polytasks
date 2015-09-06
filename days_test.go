@@ -150,4 +150,17 @@ func TestHandlers(t *testing.T) {
 			t.Errorf("header reponse doesn't match: \n%s", p)
 		}
 	}
+	uri = "/api/task/5629499534213120"
+	delreq, err := instance.NewRequest("DELETE", uri, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	http.DefaultServeMux.ServeHTTP(resp, delreq)
+	if p, err := ioutil.ReadAll(resp.Body); err != nil {
+		t.Fail()
+	} else {
+		if strings.Contains(string(p), "Error") {
+			t.Errorf("header response shouldn't return error: %s: ", p)
+		}
+	}
 }

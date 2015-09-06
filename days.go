@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -110,11 +111,12 @@ func postTask(w http.ResponseWriter, r *http.Request) {
 
 func deleteTask(w http.ResponseWriter, r *http.Request) {
 	c := appengine.NewContext(r)
-	id, err := decode(mux.Vars(r)["task"])
+	id := mux.Vars(r)["task"]
+	intid, err := strconv.ParseInt(id, 10, 64)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	key := keyForID(c, task)
+	key := keyForID(c, intid)
 	if err := datastore.Delete(c, key); err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 	}
