@@ -9,6 +9,7 @@
         display: block;
       }
     </style>
+    <iron-ajax url="/api/tasks" method="post" id="ajaxpost" auto></iron-ajax>
     <paper-input label="Task Summary" on-keyup="saveTask" id="taskSummary"></paper-input>
   </template>
   <script>
@@ -21,6 +22,7 @@
         if (e.which == 13) {
           this.fire('savedTask', {"summary" : this.$.taskSummary.value});
           this.$.taskSummary.value = '';
+          this.$.ajaxpost.body= {"summary": this.$.taskSummary.value};
         }
       },
       properties: {
