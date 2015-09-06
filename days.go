@@ -72,6 +72,7 @@ func init() {
 	r := mux.NewRouter().PathPrefix("/api/").Subrouter()
 	r.HandleFunc("/tasks", getAllTasks).Methods("GET")
 	r.HandleFunc("/tasks", postTask).Methods("POST")
+	r.HandleFunc("/tasks/{task}/task", deleteTask).Methods("DELETE")
 	http.Handle("/api/", r)
 }
 
@@ -92,16 +93,29 @@ func postTask(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewDecoder(r.Body).Decode(&task); err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
-	sched, err := time.Parse("02/01/2006", task.Scheduled)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-	}
-	task.Scheduled = sched
+	// sched, err := time.Parse("02/01/2006", task.Scheduled)
+	// if err != nil {
+	// 	http.Error(w, err.Error(), http.StatusBadRequest)
+	// }
+	// task.Scheduled = sched
 	ntask, err := task.save(c)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 	}
 	if err := json.NewEncoder(w).Encode(ntask); err != nil {
+		http.Error(w, err.Error(), http.StatusNotFound)
+	}
+
+}
+
+func deleteTask(w http.ResponseWriter, r *http.Request) {
+	c := appengine.NewContext(r)
+	id, err := decode(mux.Vars(r)["task"])
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+	key := keyForID(c, task)
+	if err := datastore.Delete(c, key); err != nil {
 		http.Error(w, err.Error(), http.StatusNotFound)
 	}
 
