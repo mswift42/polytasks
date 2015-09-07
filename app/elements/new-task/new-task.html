@@ -21,8 +21,8 @@
       saveTask: function(e) {
         if (e.which == 13) {
           this.fire('savedTask', {"summary" : this.$.taskSummary.value});
-          this.$.taskSummary.value = '';
           this.$.ajaxpost.body= {"summary": this.$.taskSummary.value};
+          this.$.taskSummary.value = '';
         }
       },
       properties: {
