@@ -2,3 +2,16 @@ application: polytasks
 version: 1
 runtime: go
 api_version: go1
+
+handlers:
+- url: /
+  static_files: app/index.html
+  upload: app/(.*\.html)
+- url: /scripts
+  static_dir: app/scripts
+- url: /styles
+  static_dir: app/styles
+- url: /elements
+  static_dir: app/elements
+- url: /bower_components
+  static_dir: bower_components
