@@ -9,7 +9,8 @@
         display: block;
       }
     </style>
-    <iron-ajax url="/api/tasks" method="post" id="ajaxpost" auto></iron-ajax>
+    <iron-ajax url="/api/tasks/" method="post" id="ajaxpost"
+               handle-as="json" ></iron-ajax>
     <paper-input label="Task Summary" on-keyup="saveTask" id="taskSummary"></paper-input>
   </template>
   <script>
@@ -21,7 +22,8 @@
       saveTask: function(e) {
         if (e.which == 13) {
           this.fire('savedTask', {"summary" : this.$.taskSummary.value});
-          this.$.ajaxpost.body= {"summary": this.$.taskSummary.value};
+          this.$.ajaxpost.body= JSON.stringify({"summary" : this.$.taskSummary.value});
+          this.$.ajaxpost.generateRequest();
           this.$.taskSummary.value = '';
         }
       },
