@@ -20,10 +20,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
     </style>
     <iron-ajax url="/api/tasks/" method="get" id="ajaxget"
-               last-response-changed="{{tasks}}"auto></iron-ajax>
-    <template is="dom-repeat" id="listtasks" tasks="tasks">
+               handle-as="json"
+               last-response="{{data}}" auto></iron-ajax>
+    <template is="dom-repeat" id="listtasks" items="{{data}}">
       <div>
-        <list-task task="task"></list-task>
+        <!--<div></div><span>{{item.summary}}</span></div>-->
+        <list-task summary="{{item.summary}}"></list-task>
       </div>
     </template>
   </template>
