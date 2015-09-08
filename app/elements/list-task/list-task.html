@@ -17,7 +17,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <h3>{{task.summary}}</h3>
+    <h3>{{summary}}</h3>
   </template>
   <script>
   (function() {
@@ -25,6 +25,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'list-task',
+
+      properties: {
+        summary: {
+          type: String,
+        }
+        
+      }
 
     });
   })();
