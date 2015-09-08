@@ -9,6 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../list-task/list-task.html">
 
 <dom-module id="list-tasks">
@@ -18,6 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
+    <iron-ajax url="/api/tasks/" method="get" id="ajaxget"
+               last-response-changed="{{tasks}}"auto></iron-ajax>
     <template is="dom-repeat" id="listtasks" tasks="tasks">
       <div>
         <list-task task="task"></list-task>

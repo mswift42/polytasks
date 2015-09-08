@@ -71,8 +71,8 @@ func listTasks(c appengine.Context) ([]Task, error) {
 
 func init() {
 	r := mux.NewRouter().PathPrefix("/api/").Subrouter()
-	r.HandleFunc("/tasks", getAllTasks).Methods("GET")
-	r.HandleFunc("/tasks", postTask).Methods("POST")
+	r.HandleFunc("/tasks/", getAllTasks).Methods("GET")
+	r.HandleFunc("/tasks/", postTask).Methods("POST")
 	r.HandleFunc("/tasks/{task}/task", deleteTask).Methods("DELETE")
 	r.HandleFunc("/tasks/", postTask).Methods("PATCH")
 	http.Handle("/api/", r)
