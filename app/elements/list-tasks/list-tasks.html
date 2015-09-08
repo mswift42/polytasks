@@ -24,7 +24,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                last-response="{{data}}" auto></iron-ajax>
     <template is="dom-repeat" id="listtasks" items="{{data}}">
       <div>
-        <!--<div></div><span>{{item.summary}}</span></div>-->
         <list-task summary="{{item.summary}}"></list-task>
       </div>
     </template>
