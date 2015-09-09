@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="layout horizontal wrap">
     <template is="dom-repeat" id="listtasks" items="{{data}}">
       <div>
-        <list-task summary="{{item.summary}}"></list-task>
+        <list-task id="{{item.id}}" summary="{{item.summary}}"></list-task>
       </div>
       </div>
     </template>
