@@ -23,7 +23,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <iron-ajax url="/api/tasks/" method="get" id="ajaxget"
                handle-as="json"
-               last-response="{{data}}" auto></iron-ajax>
+               on-response="handleResponse" auto
+               tasks="{{tasklist}}"></iron-ajax>
     <div class="layout horizontal wrap">
     <template is="dom-repeat" id="listtasks" items="{{tasklist}}">
       <div>
@@ -43,7 +44,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Array,
           notify: true
         }
-      }
+      },
+      attached: function() {
+        this.tasklist = [];
+        },
+      handleResponse: function(data) {
+        console.log(data.detail.response);
+        this.tasklist = data.detail.response;
+        },
 
     });
   })();
