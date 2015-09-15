@@ -23,8 +23,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     <iron-ajax url="/api/tasks/" method="get" id="ajaxget"
                handle-as="json"
-               on-response="handleResponse" auto
-               tasks="{{tasklist}}"></iron-ajax>
+               on-response="handleResponse" auto ></iron-ajax>
     <div class="layout horizontal wrap">
     <template is="dom-repeat" id="listtasks" items="{{tasklist}}">
       <div>
