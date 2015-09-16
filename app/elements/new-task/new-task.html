@@ -28,7 +28,7 @@
         }
       },
       handleResponse: function(event, req) {
-        this.fire('savedTask', {"summary" : this.$.taskSummary.value,
+        this.fire('save', {"summary" : req.response.summary,
         "taskid": req.response.id});
       },
       properties: {
