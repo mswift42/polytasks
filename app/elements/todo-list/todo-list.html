@@ -1,0 +1,62 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../list-task/list-task.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<dom-module id="todo-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+        margin-top:5vh;
+      }
+    </style>
+    <iron-ajax url="/api/tasks/" method="get" id="ajaxget"
+               handle-as="json"
+               on-response="handleResponse" auto></iron-ajax>
+    <div class="layout horizontal wrap">
+    <template is="dom-repeat" id="listtasks" items="{{tasklist}}">
+      <div>
+        <list-task id="{{item.id}}" summary="{{item.summary}}"></list-task>
+      </div>
+    </template>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    Polymer({
+      is: 'todo-list',
+      properties: {
+        tasklist: {
+          type: Array,
+          notify: true,
+        }
+      },
+      ready: function() {
+        this.tasklist = [];
+        document.addEventListener('save', function(e) {
+          var tl = document.querySelector('list-tasks').tasklist;
+          document.querySelector('#listtasks').render();
+          console.log(tl);
+        });
+      },
+      handleResponse: function(data) {
+        this.tasklist = data.detail.response;
+      },
+
+    });
+   })();
+  </script>
+</dom-module>
