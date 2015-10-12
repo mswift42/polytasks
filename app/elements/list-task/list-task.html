@@ -9,6 +9,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="list-task">
   <template>
@@ -22,7 +24,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      }
     </style>
     <paper-material elevation="1" class="summarycard">
-      <h3>{{summary}}</h3>
+      <div>
+        <paper-icon-button icon="delete"
+                           on-click="deleteItem">
+        </paper-icon-button>
+        <paper-checkbox on-change="toggleItem"
+                        checked="{{done}}">[[summary]]</paper-checkbox>
+      </div>
     </paper-material>
   </template>
   <script>
@@ -34,8 +42,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       properties: {
         summary: {
-          type: String,
-        }
+          type: String
+        },
+        done: {
+          type: Boolean
+        },
 
       }
 
