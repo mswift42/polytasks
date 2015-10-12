@@ -28,8 +28,8 @@
         }
       },
       handleResponse: function(event, req) {
-        this.fire('save', {"summary" : req.response.summary,
-        "taskid": req.response.id});
+        this.fire('save', {summary : req.response.summary,
+        "id": req.response.id});
       },
       properties: {
       }

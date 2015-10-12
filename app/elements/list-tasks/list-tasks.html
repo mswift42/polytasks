@@ -41,16 +41,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       properties: {
         tasklist: {
           type: Array,
-          notify: true
+          notify: true,
         }
       },
       ready: function() {
         this.tasklist = [];
         document.addEventListener('save', function(e) {
-          document.querySelector('list-tasks').tasklist.unshift(e.detail);
-          console.log(document.querySelector('list-tasks').tasklist);
+          var tl = document.querySelector('list-tasks');
+          tl.push('tasklist', e.detail);
         });
-        },
+      },
       handleResponse: function(data) {
         this.tasklist = data.detail.response;
       },
