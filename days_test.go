@@ -67,6 +67,7 @@ func TestSave(t *testing.T) {
 	t1 := Task{Summary: "task1",
 		Content: []string{"Some Content"}}
 	c, err := aetest.NewContext(nil)
+	defer c.Close()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -83,6 +84,7 @@ func TestListTasks(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer c.Close()
 	assert := assert.New(t)
 	t1 := Task{Summary: "task1", Done: true}
 	t2 := Task{Summary: "task2", Done: false}
@@ -110,7 +112,7 @@ func TestHandlers(t *testing.T) {
 		t.Fatal(err)
 	}
 	resp := httptest.NewRecorder()
-	uri := "/api/tasks"
+	uri := "/api/tasks/"
 	var testjson1 = `{"summary" : "task1",
                 "content" : ["taskcontent1"],
     "done": false}`
