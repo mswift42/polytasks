@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="layout horizontal wrap">
     <template is="dom-repeat" id="listtasks" items="{{tasklist}}">
       <div>
-        <list-task id="{{item.id}}" summary="{{item.summary}}" done="{{item.done}}"></list-task>
+        <list-task taskid="{{item.id}}" id="{{item.id}}" summary="{{item.summary}}" done="{{item.done}}"></list-task>
       </div>
     </template>
     </div>
@@ -54,6 +54,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       handleResponse: function(data) {
         this.tasklist = data.detail.response;
       },
+      deleteItem: function(data) {
+        console.log(data);
+      }
 
     });
    })();
