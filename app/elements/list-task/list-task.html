@@ -60,7 +60,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         deleteItem: function(data) {
           console.log(this.deleteUrl);
+          this.$.ajaxdelete.generateRequest();
           console.log(data);
+        },
+      handleResponse: function(data) {
+        this.fire('delete', data.detail.id);
         },
       
 
