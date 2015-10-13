@@ -63,8 +63,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.$.ajaxdelete.generateRequest();
           console.log(data);
         },
-      handleResponse: function(data) {
-        this.fire('delete', data.detail.id);
+      handleResponse: function(request) {
+        this.fire('delete', this.taskid);
         },
       
 
