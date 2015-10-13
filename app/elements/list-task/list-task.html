@@ -59,9 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.deleteUrl = '/api/tasks/' + this.taskid;
         },
         deleteItem: function(data) {
-          console.log(this.deleteUrl);
           this.$.ajaxdelete.generateRequest();
-          console.log(data);
         },
       handleResponse: function(request) {
         this.fire('delete', this.taskid);
