@@ -23,6 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        margin-left: 3vw;
      }
     </style>
+    <iron-ajax url="[[deleteUrl]]" method="delete" id="ajaxdelete"
+               handle-as="json"
+               on-response="handleResponse" ></iron-ajax>
     <paper-material elevation="1" class="summarycard">
       <div>
         <paper-icon-button icon="delete"
@@ -47,8 +50,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         done: {
           type: Boolean
         },
+        taskid: {
+          type: String
+        },
 
-      }
+      },
+      ready: function() {
+        this.deleteUrl = '/api/tasks/' + this.taskid;
+        },
+        deleteItem: function(data) {
+          console.log(this.deleteUrl);
+          console.log(data);
+        },
+      
 
     });
   })();
