@@ -26,6 +26,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax url="[[deleteUrl]]" method="delete" id="ajaxdelete"
                handle-as="json"
                on-response="handleResponse" ></iron-ajax>
+    <iron-ajax url="/api/tasks/" method="put" id="ajaxupdate"
+               handle-as="json" ></iron-ajax>
     <paper-material elevation="1" class="summarycard">
       <div>
         <paper-icon-button icon="delete"
@@ -61,6 +63,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         deleteItem: function(data) {
           this.$.ajaxdelete.generateRequest();
         },
+      toggleItem: function() {
+        this.$.ajaxupdate.body= JSON.stringify({
+          "summary" : this.summary,
+          "done" : this.done,
+          "id" : this.taskid
+        });
+        this.$.ajaxupdate.generateRequest();
+      },
       handleResponse: function(request) {
         this.fire('delete', this.taskid);
         },
