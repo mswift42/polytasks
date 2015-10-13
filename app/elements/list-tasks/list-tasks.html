@@ -50,6 +50,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var tl = document.querySelector('list-tasks');
           tl.push('tasklist', e.detail);
         });
+        document.addEventListener('delete', function(e) {
+          var task = e.detail;
+          console.log(document.getElementById(task));
+          document.getElementById(task).remove();
+        });
       },
       handleResponse: function(data) {
         this.tasklist = data.detail.response;
