@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <dom-module id="list-task">
   <template>
     <style>
@@ -28,12 +29,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                on-response="handleResponse" ></iron-ajax>
     <iron-ajax url="/api/tasks/" method="put" id="ajaxupdate"
                handle-as="json" ></iron-ajax>
-    <paper-dialog id="deletedialog">
-      <h3>Really delete Task?</h3>
-      <div class="dialogbuttons">
+    <paper-dialog id="deletedialog" fitInto="window">
+      <p style="text-align:center">Really Delete?</p>
+      <span class="dialogbuttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm>Delete</paper-button>
-      </div>
+      </span>
     </paper-dialog>
     <paper-material elevation="1" class="summarycard">
       <div>
