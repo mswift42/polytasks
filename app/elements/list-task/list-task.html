@@ -23,6 +23,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        padding:2em;
        margin-left: 3vw;
      }
+     paper-dialog {
+       padding:2em;
+     }
     </style>
     <iron-ajax url="[[deleteUrl]]" method="delete" id="ajaxdelete"
                handle-as="json"
@@ -30,7 +33,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-ajax url="/api/tasks/" method="put" id="ajaxupdate"
                handle-as="json" ></iron-ajax>
     <paper-dialog id="deletedialog" fitInto="window">
-      <p style="text-align:center">Really Delete?</p>
+      <h2 style="text-align:center">Really Delete?</h2>
       <span class="dialogbuttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm on-click="deleteItem">Delete</paper-button>
