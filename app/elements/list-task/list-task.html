@@ -33,13 +33,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <p style="text-align:center">Really Delete?</p>
       <span class="dialogbuttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm>Delete</paper-button>
+        <paper-button dialog-confirm on-click="deleteItem">Delete</paper-button>
       </span>
     </paper-dialog>
     <paper-material elevation="1" class="summarycard">
       <div>
         <paper-icon-button icon="delete"
-                           on-click="deleteItem">
+                           on-click="deleteRequest">
         </paper-icon-button>
         <paper-checkbox on-change="toggleItem"
                         checked="{{done}}">[[summary]]</paper-checkbox>
@@ -67,10 +67,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       ready: function() {
         this.deleteUrl = '/api/tasks/' + this.taskid;
-        },
+      },
+      deleteRequest: function() {
+        this.$.deletedialog.toggle();
+      },
       deleteItem: function(data) {
-          this.$.deletedialog.toggle();
-//          this.$.ajaxdelete.generateRequest();
+          this.$.ajaxdelete.generateRequest();
         },
       toggleItem: function() {
         this.$.ajaxupdate.body= JSON.stringify({
