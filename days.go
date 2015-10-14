@@ -74,7 +74,7 @@ func init() {
 	r.HandleFunc("/tasks/", getAllTasks).Methods("GET")
 	r.HandleFunc("/tasks/", postTask).Methods("POST")
 	r.HandleFunc("/tasks/{task}", deleteTask).Methods("DELETE")
-	r.HandleFunc("/tasks/", postTask).Methods("PATCH")
+	r.HandleFunc("/tasks/", postTask).Methods("PUT")
 	http.Handle("/api/", r)
 }
 
