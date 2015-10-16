@@ -40,13 +40,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </span>
     </paper-dialog>
     <paper-material elevation="1" class="summarycard">
-      <div>
+      <template is="dom-if" if="{{!editing}}">
+      <div on-dblclick="editTask">
         <paper-icon-button icon="delete"
                            on-click="deleteRequest">
         </paper-icon-button>
         <paper-checkbox on-change="toggleItem"
                         checked="{{done}}">[[summary]]</paper-checkbox>
       </div>
+      </template>
     </paper-material>
   </template>
   <script>
@@ -69,6 +71,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       },
       ready: function() {
+        this.editing = false;
         this.deleteUrl = '/api/tasks/' + this.taskid;
       },
       deleteRequest: function() {
