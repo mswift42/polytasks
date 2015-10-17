@@ -21,7 +21,7 @@
     Polymer({
       is: 'new-task',
       saveTask: function(e) {
-        if (e.which == 13 && this.$.taskSummary.value != "") {
+        if (e.which === 13 && this.$.taskSummary.value !== "") {
           this.$.ajaxpost.body= JSON.stringify({"summary" : this.$.taskSummary.value});
           this.$.ajaxpost.generateRequest();
           this.$.taskSummary.value = '';
