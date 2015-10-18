@@ -32,7 +32,7 @@
        transition: opacity 0.3s;
      }
 
-     paper-checkbox[checked] {
+     paper-checkbox[checked] ~ span{
        opacity: 0.5;
      }
      paper-icon-button {
@@ -41,7 +41,7 @@
        left:-2px;
        opacity:0.1;
      }
-     paper-icon-button:hover {
+     paper-icon-button:hover{
        opacity:1;
      }
     </style>
@@ -62,7 +62,7 @@
           <paper-checkbox on-change="toggleItem"
                           checked="{{done}}">
           </paper-checkbox>
-            <span on-dblclick="editItem">[[summary]]</span>
+            <span id="tsummary" on-dblclick="editItem">[[summary]]</span>
           <paper-icon-button icon="delete"
                              on-click="deleteRequest">
           </paper-icon-button>
