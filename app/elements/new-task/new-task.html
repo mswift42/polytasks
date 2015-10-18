@@ -8,11 +8,14 @@
       :host {
         display: block;
       }
+     paper-input {
+       padding:1em;
+     }
     </style>
     <iron-ajax url="/api/tasks/" method="post" id="ajaxpost"
                handle-as="json"
                on-response="handleResponse"></iron-ajax>
-    <paper-input label="Task Summary" on-keyup="saveTask" id="taskSummary"></paper-input>
+    <paper-input autofocus label="Task Summary" on-keyup="saveTask" id="taskSummary"></paper-input>
   </template>
   <script>
   (function() {
