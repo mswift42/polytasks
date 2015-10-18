@@ -1,12 +1,12 @@
 <!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+     @license
+     Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+     This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+     The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+     The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+     Code distributed by Google as part of the polymer project is also
+     subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+   -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-checkbox/paper-checkbox.html">
@@ -16,15 +16,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="list-task">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+     :host {
+       display: block;
+     }
      .summarycard {
        padding:2em;
        margin-left: 3vw;
      }
      paper-dialog {
        padding:2em;
+     }
+     paper-checkbox {
+       display: inline-block;
+       margin: 5px 0;
+       transition: opacity 0.3s;
+     }
+
+     paper-checkbox[checked] {
+       opacity: 0.5;
      }
     </style>
     <iron-ajax url="[[deleteUrl]]" method="delete" id="ajaxdelete"
@@ -41,59 +50,78 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-dialog>
     <paper-material elevation="1" class="summarycard">
       <template is="dom-if" if="{{!editing}}">
-      <div on-dblclick="editItem">
-        <paper-icon-button icon="delete"
-                           on-click="deleteRequest">
-        </paper-icon-button>
-        <paper-checkbox on-change="toggleItem"
-                        checked="{{done}}">[[summary]]</paper-checkbox>
-      </div>
+        <div on-dblclick="editItem">
+          <paper-icon-button icon="delete"
+                             on-click="deleteRequest">
+          </paper-icon-button>
+          <paper-checkbox on-change="toggleItem"
+                          checked="{{done}}">[[summary]]</paper-checkbox>
+        </div>
+      </template>
+      <template is="dom-if" if="{{editing}}">
+        <paper-input  value="{{summary}}" on-keyup="editTask" on-blur="blurAction"
+                      id="editSummary"></paper-input>
       </template>
     </paper-material>
   </template>
   <script>
-  (function() {
-    'use strict';
+   (function() {
+     'use strict';
 
-    Polymer({
-      is: 'list-task',
+     Polymer({
+       is: 'list-task',
 
-      properties: {
-        summary: {
-          type: String
-        },
-        done: {
-          type: Boolean
-        },
-        taskid: {
-          type: String
-        },
+       properties: {
+         summary: {
+           type: String
+         },
+         done: {
+           type: Boolean
+         },
+         taskid: {
+           type: String
+         },
 
-      },
-      ready: function() {
-        this.editing = false;
-        this.deleteUrl = '/api/tasks/' + this.taskid;
-      },
-      deleteRequest: function() {
-        this.$.deletedialog.toggle();
-      },
-      deleteItem: function(data) {
-          this.$.ajaxdelete.generateRequest();
-        },
-      toggleItem: function() {
-        this.$.ajaxupdate.body= JSON.stringify({
-          "summary" : this.summary,
-          "done" : this.done,
-          "id" : this.taskid
-        });
-        this.$.ajaxupdate.generateRequest();
-      },
-      handleResponse: function(request) {
-        this.fire('delete', this.taskid);
-        },
-      
+       },
+       ready: function() {
+         this.editing = false;
+         this.deleteUrl = '/api/tasks/' + this.taskid;
+       },
+       deleteRequest: function() {
+         this.$.deletedialog.toggle();
+       },
+       deleteItem: function(data) {
+         this.$.ajaxdelete.generateRequest();
+       },
+       toggleItem: function() {
+         this.$.ajaxupdate.body= JSON.stringify({
+           "summary" : this.summary,
+           "done" : this.done,
+           "id" : this.taskid
+         });
+         this.$.ajaxupdate.generateRequest();
+       },
+       editItem: function() {
+         this.editing = !this.editing;
+       },
+       editTask: function(e) {
+         if (e.keyCode === 27) {
+           this.editing = !this.editing;
+         }
+         if (e.keyCode === 13) {
+           this.toggleItem();
+           this.editing = !this.editing;
+         }
+       },
+       blurAction: function(e) {
+         this.editing = false;
+       },
+       handleResponse: function(request) {
+         this.fire('delete', this.taskid);
+       },
+       
 
-    });
-  })();
+     });
+   })();
   </script>
 </dom-module>
