@@ -35,6 +35,15 @@
      paper-checkbox[checked] {
        opacity: 0.5;
      }
+     paper-icon-button {
+       position:absolute;
+       bottom:-2px;
+       left:-2px;
+       opacity:0.1;
+     }
+     paper-icon-button:hover {
+       opacity:1;
+     }
     </style>
     <iron-ajax url="[[deleteUrl]]" method="delete" id="ajaxdelete"
                handle-as="json"
@@ -50,13 +59,13 @@
     </paper-dialog>
     <paper-material elevation="1" class="summarycard">
       <template is="dom-if" if="{{!editing}}">
-        <div on-dblclick="editItem">
+          <paper-checkbox on-change="toggleItem"
+                          checked="{{done}}">
+          </paper-checkbox>
+            <span on-dblclick="editItem">[[summary]]</span>
           <paper-icon-button icon="delete"
                              on-click="deleteRequest">
           </paper-icon-button>
-          <paper-checkbox on-change="toggleItem"
-                          checked="{{done}}">[[summary]]</paper-checkbox>
-        </div>
       </template>
       <template is="dom-if" if="{{editing}}">
         <paper-input  value="{{summary}}" on-keyup="editTask" on-blur="blurAction"
