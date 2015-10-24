@@ -27,42 +27,44 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="layout horizontal wrap">
     <template is="dom-repeat" id="listtasks" items="{{tasklist}}">
       <div>
-        <list-task taskid="{{item.id}}" id="{{item.id}}" summary="{{item.summary}}" done="{{item.done}}"></list-task>
+        <list-task taskid="{{item.id}}" id="{{item.id}}"
+                   summary="{{item.summary}}" done="{{item.done}}"
+                   content="{{item.content}}" ></list-task>
       </div>
     </template>
     </div>
   </template>
   <script>
-  (function() {
-    'use strict';
+   (function() {
+     'use strict';
 
-    Polymer({
-      is: 'list-tasks',
-      properties: {
-        tasklist: {
-          type: Array,
-          notify: true,
-        }
-      },
-      ready: function() {
-        this.tasklist = [];
-        document.addEventListener('save', function(e) {
-          var tl = document.querySelector('list-tasks');
-          tl.push('tasklist', e.detail);
-        });
-        document.addEventListener('delete', function(e) {
-          var task = e.detail;
-          document.getElementById(task).remove();
-        });
-      },
-      handleResponse: function(data) {
-        this.tasklist = data.detail.response;
-      },
-      deleteItem: function(data) {
-        console.log(data);
-      }
+     Polymer({
+       is: 'list-tasks',
+       properties: {
+         tasklist: {
+           type: Array,
+           notify: true,
+         }
+       },
+       ready: function() {
+         this.tasklist = [];
+         document.addEventListener('save', function(e) {
+           var tl = document.querySelector('list-tasks');
+           tl.push('tasklist', e.detail);
+         });
+         document.addEventListener('delete', function(e) {
+           var task = e.detail;
+           document.getElementById(task).remove();
+         });
+       },
+       handleResponse: function(data) {
+         this.tasklist = data.detail.response;
+       },
+       deleteItem: function(data) {
+         console.log(data);
+       }
 
-    });
+     });
    })();
   </script>
 </dom-module>
