@@ -11,22 +11,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <html>
 
-  <head>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>Elements Test Runner</title>
-    <meta charset="UTF-8">
+<head>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <title>Elements Test Runner</title>
+  <meta charset="UTF-8">
 
-    <script src="../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
-    <script src="../../bower_components/web-component-tester/browser.js"></script>
-  </head>
+  <script src="../../bower_components/webcomponentsjs/webcomponents.min.js"></script>
+  <script src="../../bower_components/web-component-tester/browser.js"></script>
+</head>
 
-  <body>
+<body>
 
-    <script>
-      WCT.loadSuites(['new-task-basic.html', 'list-tasks-basic.html', 'list-task-basic.html', 'edit-task-basic.html', 'input-model-basic.html']);
-    </script>
+  <script>
+    WCT.loadSuites([
+      'new-task-basic.html',
+      'list-tasks-basic.html',
+      'list-task-basic.html',
+      'edit-task-basic.html',
+      'input-model-basic.html',
+      'task-note-basic.html',
+      'task-note-basic.html?dom=shadow'
+    ]);
+  </script>
 
 
-  </body>
+</body>
 
 </html>
