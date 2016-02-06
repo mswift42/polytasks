@@ -9,31 +9,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 
 <dom-module id="task-note">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+     :host {
+       display: block;
+     }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <iron-ajax url="/api/tasks/" method="put" id="ajaxupdate"
+               handle-as="json"></iron-ajax>
+    <span class="notesection">
+      <paper-icon-button icon="delete" class="deletebutton" on-click="deleteNote">
+      </paper-icon-button>
+      <span class="notecontent">{{notecontent}}</span>
+    </span>
   </template>
   <script>
-  (function() {
-    'use strict';
+   (function() {
+     'use strict';
 
-    Polymer({
-      is: 'task-note',
+     Polymer({
+       is: 'task-note',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'task-note',
-          notify: true
-        }
-      }
-    });
-  })();
+       properties: {
+         notecontent: {
+           type: String
+         }
+       },
+       deleteNote: function(data) {
+         this.$.ajaxupdate.generateRequest();
+       }
+     });
+   })();
   </script>
 </dom-module>
