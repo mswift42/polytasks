@@ -9,7 +9,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
+<link rel="import" href="../task-note/task-note.html">
 <dom-module id="task-notes.html">
   <template>
     <style>
@@ -17,7 +17,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <template is="dom-repeat" id="tasknotes" items="{{tasknotes}}">
+      <task-note notecontent="item.content"></task-note>
+    </template>
   </template>
   <script>
   (function() {
