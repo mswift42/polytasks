@@ -9,31 +9,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-date-picker/paper-date-picker.html">
 
 <dom-module id="scheduled-element">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+     :host {
+       display: block;
+     }
     </style>
     <div>Hello from <span>{{foo}}</span></div>
   </template>
   <script>
-  (function() {
-    'use strict';
+   (function() {
+     'use strict';
 
-    Polymer({
-      is: 'scheduled-element',
+     Polymer({
+       is: 'scheduled-element',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'scheduled-element',
-          notify: true
-        }
-      }
-    });
-  })();
+       properties: {
+         foo: {
+           type: String,
+           value: 'scheduled-element',
+           notify: true
+         }
+       }
+     });
+   })();
   </script>
 </dom-module>
