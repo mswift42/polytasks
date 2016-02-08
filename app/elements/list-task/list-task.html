@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../scheduled-element/scheduled-element.html">
 <dom-module id="list-task">
   <template>
     <style>
@@ -34,9 +35,9 @@
      .deletebutton:hover{
        opacity:1;
      }
-      .addbutton {
-        position: absolute;
-      }
+     .addbutton {
+       position: absolute;
+     }
     </style>
     <iron-ajax url="[[deleteUrl]]" method="delete" id="ajaxdelete"
                handle-as="json"
@@ -48,27 +49,29 @@
       <span class="dialogbuttons">
         <paper-button dialog-dismiss>Cancel</paper-button>
         <paper-button dialog-confirm on-click="deleteItem">Delete</paper-button>
-      </span>sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+      </span>
     </paper-dialog>
     <paper-material elevation="1" class="summarycard">
       <template is="dom-if" if="{{!editing}}">
-          <paper-checkbox on-change="toggleItem"
-                          checked="{{done}}">
-          </paper-checkbox>
-            <span id="tsummary" on-dblclick="editItem">[[summary]]</span>
-        <paper-icon-button class="addbutton" icon="add"></paper-icon-button>
+        <paper-checkbox on-change="toggleItem"
+                        checked="{{done}}">
+        </paper-checkbox>
+        <span id="tsummary" on-dblclick="editItem">[[summary]]</span>
         <ul>
-        <template is="dom-repeat" id="tcontent" items="{{content}}">
-         <li>{{item}}</li>
-        </template>
-          </ul>
-          <paper-icon-button icon="delete" class="deletebutton"
-                             on-click="deleteRequest">
-          </paper-icon-button>
+          <template is="dom-repeat" id="tcontent" items="{{content}}">
+            <li>{{item}}</li>
+          </template>
+        </ul>
+        <paper-icon-button icon="delete" class="deletebutton"
+                           on-click="deleteRequest">
+        </paper-icon-button>
       </template>
       <template is="dom-if" if="{{editing}}">
         <paper-input  value="{{summary}}" on-keyup="editTask" on-blur="blurAction"
                       id="editSummary"></paper-input>
+        <template is="dom-if" if="{{scheduled != ''}}"
+          <scheduled-element date="{{scheduled}}"></scheduled-element>
+        </template>
       </template>
     </paper-material>
   </template>
@@ -92,6 +95,9 @@
          content: {
            type: Array,
            notify:true,
+         },
+         scheduled: {
+           type: String
          }
 
        },
@@ -108,6 +114,8 @@
        toggleItem: function() {
          this.$.ajaxupdate.body= JSON.stringify({
            "summary" : this.summary,
+           "content" : this.content,
+           "scheduled" : this.scheduled,
            "done" : this.done,
            "id" : this.taskid
          });
