@@ -18,7 +18,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        display: block;
      }
     </style>
-    <paper-date-picker id="picker" date="[[date]]"></paper-date-picker>
+    <div class="scheduled">
+      <span>
+        <iron-icon icon="icons:event"></iron-icon>
+        <paper-date-picker id="picker" date="[[date]]"></paper-date-picker>
+      </span>
+    </div>
   </template>
   <script>
    (function() {
