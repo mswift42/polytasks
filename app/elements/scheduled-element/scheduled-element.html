@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        display: block;
      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <paper-date-picker id="picker" date="[[date]]"></paper-date-picker>
   </template>
   <script>
    (function() {
@@ -28,9 +28,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        is: 'scheduled-element',
 
        properties: {
-         foo: {
+         date: {
            type: String,
-           value: 'scheduled-element',
            notify: true
          }
        }
